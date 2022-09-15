@@ -1,0 +1,62 @@
+# Loading the dataset
+install.packages("readxl")
+library("readxl")
+data <- read_excel("google_review.xlsx")
+
+#Preparing the dataset
+data$...26<-NULL
+data$User<-NULL
+data <- scale(data)
+
+#Loading k means library
+
+install.packages("factoextra")
+library(factoextra)
+
+# Choosing ideal k - Elbow method
+fviz_nbclust(data, kmeans, method = "wss") + geom_vline(xintercept = 6, linetype = 2)
+
+# Choosing ideal k - Silhouette method
+fviz_nbclust(data, kmeans, method = "gap_stat")
+
+# Generating K means with k = 6
+k6 <- kmeans(data,6)
+
+# Visualizing K means with k = 6
+fviz_cluster(k6, data = data, ellipse.type = "euclid")
+
+# Visualizing clusters in the dataset
+k6$cluster
+
+# Clusters mean 
+aggregate(data, by=list(cluster=k6$cluster), mean)
+
+# Clusters sd
+aggregate(data, by=list(cluster=k6$cluster), sd)
+
+# Generating K means with k = 12
+k12 <- kmeans(data,12)
+
+# Visualizing K means with k = 12
+fviz_cluster(k12, data = data, ellipse.type = "euclid")
+
+# Visualizing clusters in the dataset
+k12$cluster
+
+# Clusters mean 
+aggregate(data, by=list(cluster=k12$cluster), mean)
+
+# Clusters sd
+aggregate(data, by=list(cluster=k12$cluster), sd)
+
+# Visualizing K means with k = 12
+fviz_cluster(k12, data = data, ellipse.type = "euclid")
+
+# Visualizing clusters in the dataset
+k12$cluster
+
+# Clusters mean 
+aggregate(data, by=list(cluster=k12$cluster), mean)
+
+# Clusters sd
+aggregate(data, by=list(cluster=k12$cluster), sd)
